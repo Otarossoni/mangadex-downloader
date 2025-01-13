@@ -28,7 +28,7 @@ func init() {
 	rootCmd.Flags().String("url", "", "URL of the Manga to be downloaded")
 	rootCmd.Flags().String("mangaId", "", "ID of the Manga to be downloaded")
 	rootCmd.Flags().String("chapters", "", "Chapters range")
-	rootCmd.Flags().String("languages", "", "Chapter language")
+	rootCmd.Flags().String("language", "", "Chapter language")
 }
 
 func ExecuteRoot() {

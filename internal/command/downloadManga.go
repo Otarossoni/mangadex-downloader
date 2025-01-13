@@ -26,10 +26,13 @@ func (c *DownloadMangaCommand) Execute(cmd *cobra.Command) error {
 
 	chapters, errChapters := c.CobraHelper.HandleChapters(cmd)
 	if errChapters != nil {
-		return errMangaId
+		return errChapters
 	}
 
-	languages := c.CobraHelper.HandleLanguages(cmd)
+	language, errLanguage := c.CobraHelper.HandleLanguage(cmd)
+	if errLanguage != nil {
+		return errLanguage
+	}
 
 	color.Green(mangaId)
 
@@ -37,9 +40,7 @@ func (c *DownloadMangaCommand) Execute(cmd *cobra.Command) error {
 		color.Green(fmt.Sprintf("%d", chapter))
 	}
 
-	for _, language := range languages {
-		color.Green(fmt.Sprintf("%v", language))
-	}
+	color.Green(language)
 
 	return nil
 }

@@ -2,6 +2,7 @@ package helper
 
 import (
 	"errors"
+	"regexp"
 	"strings"
 
 	"github.com/spf13/cobra"
@@ -83,12 +84,21 @@ func (c *CobraHelper) HandleChapters(cmd *cobra.Command) ([]int, error) {
 	return chapters, nil
 }
 
-// HandleLanguages is the function that handles the chapters languages
-// Input example from flag: "pt-br,en,es"
-func (c *CobraHelper) HandleLanguages(cmd *cobra.Command) []string {
-	rawLanguages, _ := cmd.Flags().GetString("languages")
+// HandleLanguage is the function that handles the chapters languages
+// Input example from flag: "en", "pt-br"
+func (c *CobraHelper) HandleLanguage(cmd *cobra.Command) (string, error) {
+	rawLanguage, _ := cmd.Flags().GetString("language")
 
-	splitLanguages := strings.Split(rawLanguages, ",")
+	if rawLanguage == "" {
+		return "en", nil
+	}
 
-	return splitLanguages
+	pattern := `^[a-z]{2}(-[a-z]{2})?$`
+
+	regex := regexp.MustCompile(pattern)
+	if regex.MatchString(rawLanguage) {
+		return rawLanguage, nil
+	}
+
+	return "", errors.New("format of the language provided is invalid")
 }
