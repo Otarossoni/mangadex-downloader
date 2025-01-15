@@ -5,6 +5,7 @@ import (
 
 	"github.com/Otarossoni/mangadex-downloader/helper"
 	"github.com/Otarossoni/mangadex-downloader/internal/command"
+	"github.com/Otarossoni/mangadex-downloader/service"
 	"github.com/fatih/color"
 	"github.com/spf13/cobra"
 )
@@ -14,7 +15,8 @@ var rootCmd = &cobra.Command{
 	Short: "Download manga from Mangadex",
 	Run: func(cmd *cobra.Command, args []string) {
 		cobraHelper := helper.NewCobraHelper()
-		downloadMangaCommand := command.NewDownloadMangaCommand(cobraHelper)
+		mangadexApi := service.NewMangadexApi()
+		downloadMangaCommand := command.NewDownloadMangaCommand(cobraHelper, mangadexApi)
 
 		errMangaId := downloadMangaCommand.Execute(cmd)
 		if errMangaId != nil {
