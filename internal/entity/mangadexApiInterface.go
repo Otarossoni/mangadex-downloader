@@ -18,7 +18,7 @@ type GetChapterResponse struct {
 
 type GetChapterPagesResponse struct {
 	Result  string                          `json:"result"`  // Request result: "ok" | "error"
-	BaseUrl *string                         `json:"baseUrl"` // Base URL to fetch chapter individual pages
+	BaseUrl string                          `json:"baseUrl"` // Base URL to fetch chapter individual pages
 	Chapter *GetChapterPagesChapterResponse `json:"chapter"` // Chapter details
 }
 

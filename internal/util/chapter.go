@@ -1,6 +1,9 @@
 package util
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 func GetChapterNumber(chapterNumber int) string {
 	return fmt.Sprintf("%05d", chapterNumber)
@@ -14,4 +17,14 @@ func GetChapterName(title string, chapterNumber int) string {
 	}
 
 	return title
+}
+
+func GetChapterPageNumber(pageIdentification string) string {
+	if pageIdentification == "" {
+		return ""
+	}
+
+	chapterPageNumber := strings.SplitN(pageIdentification, "-", 1)
+
+	return chapterPageNumber[0]
 }

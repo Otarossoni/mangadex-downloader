@@ -84,7 +84,7 @@ func (m *MangadexApi) GetPage(baseUrl, chapterHash, pageIdentification string) (
 		return nil, resp, err
 	}
 
-	return response.RawBody, nil, err
+	return response.RawBody, nil, nil
 }
 
 func parseError(body []byte) (*entity.ErrorResponse, error) {
