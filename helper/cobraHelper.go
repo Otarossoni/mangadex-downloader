@@ -33,7 +33,7 @@ func (c *CobraHelper) HandleMangaId(cmd *cobra.Command) (string, error) {
 		}
 	}
 
-	return "", errors.New("could not identify a valid Manga ID from the provided flags")
+	return "", errors.New("\ncould not identify a valid Manga ID from the provided flags")
 }
 
 // HandleChapters is the function that handles chapter numbers
@@ -51,21 +51,21 @@ func (c *CobraHelper) HandleChapters(cmd *cobra.Command) ([]int, error) {
 			rawRanges := strings.SplitN(splitChapterRange, "-", 2)
 
 			if len(rawRanges) > 2 {
-				return chapters, errors.New("range provided is invalid")
+				return chapters, errors.New("\nrange provided is invalid")
 			}
 
 			minRange, errMinRange := convertStringToInt(strings.TrimSpace(rawRanges[0]))
 			if errMinRange != nil {
-				return chapters, errors.New("range provided is invalid")
+				return chapters, errors.New("\nrange provided is invalid")
 			}
 
 			maxRange, errMaxRange := convertStringToInt(strings.TrimSpace(rawRanges[1]))
 			if errMaxRange != nil {
-				return chapters, errors.New("range provided is invalid")
+				return chapters, errors.New("\nrange provided is invalid")
 			}
 
 			if minRange > maxRange {
-				return nil, errors.New("range start cannot be greater than range end")
+				return nil, errors.New("\nrange start cannot be greater than range end")
 			}
 
 			rangeSize := maxRange - minRange + 1
@@ -100,5 +100,5 @@ func (c *CobraHelper) HandleLanguage(cmd *cobra.Command) (string, error) {
 		return rawLanguage, nil
 	}
 
-	return "", errors.New("format of the language provided is invalid")
+	return "", errors.New("\nformat of the language provided is invalid")
 }

@@ -10,13 +10,10 @@ func GetChapterNumber(chapterNumber int) string {
 }
 
 func GetChapterName(title string, chapterNumber int) string {
-	formattedChapterNumber := GetChapterNumber(chapterNumber)
-
 	if title == "" {
-		return "Chapter_" + formattedChapterNumber
+		return "Chapter_" + GetChapterNumber(chapterNumber)
 	}
-
-	return title
+	return strings.Trim(title, " ")
 }
 
 func GetChapterPageNumber(pageIdentification string) string {
