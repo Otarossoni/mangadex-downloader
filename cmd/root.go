@@ -16,7 +16,8 @@ var rootCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		cobraHelper := helper.NewCobraHelper()
 		mangadexApi := service.NewMangadexApi()
-		downloadMangaCommand := command.NewDownloadMangaCommand(cobraHelper, mangadexApi)
+		packer := helper.NewPacker()
+		downloadMangaCommand := command.NewDownloadMangaCommand(cobraHelper, mangadexApi, packer)
 
 		errMangaId := downloadMangaCommand.Execute(cmd)
 		if errMangaId != nil {

@@ -12,12 +12,14 @@ import (
 type DownloadMangaCommand struct {
 	CobraHelper entity.CobraHelper
 	MangadexApi entity.MangadexApi
+	Packer      entity.Packer
 }
 
-func NewDownloadMangaCommand(cobraHelper entity.CobraHelper, mangadexApi entity.MangadexApi) *DownloadMangaCommand {
+func NewDownloadMangaCommand(cobraHelper entity.CobraHelper, mangadexApi entity.MangadexApi, packer entity.Packer) *DownloadMangaCommand {
 	return &DownloadMangaCommand{
 		CobraHelper: cobraHelper,
 		MangadexApi: mangadexApi,
+		Packer:      packer,
 	}
 }
 
@@ -70,11 +72,20 @@ func (c *DownloadMangaCommand) Execute(cmd *cobra.Command) error {
 			}
 
 			fmt.Printf(
-				color.HiBlackString("\n%v fetching chapter %v - %v pages...\n"),
+				color.HiBlackString("\n%v fetching chapter %v - %v pages..."),
 				color.HiCyanString("+"),
 				color.YellowString(util.GetChapterNumber(chapter)),
 				color.CyanString(util.GetChapterName(chapterData.Attributes.Title, chapter)),
 			)
+
+			filePack := entity.FilePack{
+				Name: fmt.Sprintf(
+					"%v - %v",
+					util.GetChapterNumber(chapter),
+					util.GetChapterName(chapterData.Attributes.Title, chapter),
+				),
+				Extension: ".cbz",
+			}
 
 			for _, chapterPageIdentification := range chapterPagesList.Chapter.Data {
 				chapterPage, errResponse, errChapterPage := c.MangadexApi.GetPage(
@@ -92,8 +103,28 @@ func (c *DownloadMangaCommand) Execute(cmd *cobra.Command) error {
 					continue
 				}
 
-				color.Magenta(fmt.Sprintf("%v", chapterPage[1000]))
+				filePack.Data = append(
+					filePack.Data,
+					entity.Page{
+						Name:      util.GetPageName(chapterPageIdentification),
+						Extension: util.GetPageExtension(chapterPageIdentification),
+						Data:      chapterPage,
+					},
+				)
 			}
+
+			zipName := fmt.Sprintf("%v%v", filePack.Name, filePack.Extension)
+
+			c.Packer.CreateZipFile(
+				filePack.Data,
+				zipName,
+			)
+
+			fmt.Printf(
+				color.HiBlackString("\n%v file %v created\n"),
+				color.HiGreenString("+"),
+				color.CyanString(zipName),
+			)
 		}
 	}
 
