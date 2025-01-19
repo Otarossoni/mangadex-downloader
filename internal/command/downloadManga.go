@@ -39,6 +39,11 @@ func (c *DownloadMangaCommand) Execute(cmd *cobra.Command) error {
 		return errLanguage
 	}
 
+	packExtension, errPackExtension := c.CobraHelper.HandlePackExtension(cmd)
+	if errPackExtension != nil {
+		return errPackExtension
+	}
+
 	for _, chapter := range chapters {
 		chapterDetails, errResponse, errChapterDetails := c.MangadexApi.GetChapter(
 			mangaId,
@@ -84,7 +89,7 @@ func (c *DownloadMangaCommand) Execute(cmd *cobra.Command) error {
 					util.GetChapterNumber(chapter),
 					util.GetChapterName(chapterData.Attributes.Title, chapter),
 				),
-				Extension: ".cbz",
+				Extension: packExtension,
 			}
 
 			for _, chapterPageIdentification := range chapterPagesList.Chapter.Data {

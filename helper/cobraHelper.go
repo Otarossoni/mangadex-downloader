@@ -102,3 +102,18 @@ func (c *CobraHelper) HandleLanguage(cmd *cobra.Command) (string, error) {
 
 	return "", errors.New("\nformat of the language provided is invalid")
 }
+
+// HandlePackExtension is the function that handles the pack extension, ensuring a default value
+// Input example from flag: ".zip", ".cbz"
+func (c *CobraHelper) HandlePackExtension(cmd *cobra.Command) (string, error) {
+	rawExtension, _ := cmd.Flags().GetString("extension")
+
+	switch rawExtension {
+	case "":
+		return ".zip", nil
+	case ".cbz", ".zip":
+		return rawExtension, nil
+	default:
+		return "", errors.New("\npack extension provided is invalid")
+	}
+}
