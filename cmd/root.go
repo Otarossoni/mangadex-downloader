@@ -33,6 +33,7 @@ func init() {
 	rootCmd.Flags().String("chapters", "", "Chapters range")
 	rootCmd.Flags().String("language", "", "Chapter language")
 	rootCmd.Flags().String("extension", "", "Extension for chapter pack")
+	rootCmd.Flags().String("outPath", "", "Directory for saving files")
 }
 
 func ExecuteRoot() {

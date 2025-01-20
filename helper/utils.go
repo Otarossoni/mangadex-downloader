@@ -2,6 +2,8 @@ package helper
 
 import (
 	"net/url"
+	"os"
+	"path/filepath"
 	"strconv"
 	"strings"
 
@@ -41,4 +43,20 @@ func extractUUIDFromURL(url string) string {
 		}
 	}
 	return ""
+}
+
+func ExistPath(path string) bool {
+	_, err := os.Stat(path)
+	if os.IsNotExist(err) {
+		return false
+	}
+	return err == nil
+}
+
+func AddBackslash(path string) string {
+	if strings.HasSuffix(path, string(filepath.Separator)) {
+		return path
+	}
+
+	return path + string(filepath.Separator)
 }

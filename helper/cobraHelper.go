@@ -117,3 +117,18 @@ func (c *CobraHelper) HandlePackExtension(cmd *cobra.Command) (string, error) {
 		return "", errors.New("\npack extension provided is invalid")
 	}
 }
+
+// HandleOutPath is the function that handles the output path, validating and formatting it
+func (c *CobraHelper) HandleOutPath(cmd *cobra.Command) (string, error) {
+	rawOutPath, _ := cmd.Flags().GetString("outPath")
+
+	if rawOutPath == "" {
+		return rawOutPath, nil
+	}
+
+	if ExistPath(rawOutPath) {
+		return AddBackslash(rawOutPath), nil
+	}
+
+	return "", errors.New("\nout path provided not exist")
+}

@@ -44,6 +44,11 @@ func (c *DownloadMangaCommand) Execute(cmd *cobra.Command) error {
 		return errPackExtension
 	}
 
+	outPath, errOutPath := c.CobraHelper.HandleOutPath(cmd)
+	if errOutPath != nil {
+		return errOutPath
+	}
+
 	for _, chapter := range chapters {
 		chapterDetails, errResponse, errChapterDetails := c.MangadexApi.GetChapter(
 			mangaId,
@@ -122,7 +127,7 @@ func (c *DownloadMangaCommand) Execute(cmd *cobra.Command) error {
 
 			c.Packer.CreateZipFile(
 				filePack.Data,
-				zipName,
+				outPath+zipName,
 			)
 
 			fmt.Printf(
