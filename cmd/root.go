@@ -28,12 +28,14 @@ var rootCmd = &cobra.Command{
 }
 
 func init() {
-	rootCmd.Flags().String("url", "", "URL of the Manga to be downloaded")
-	rootCmd.Flags().String("mangaId", "", "ID of the Manga to be downloaded")
-	rootCmd.Flags().String("chapters", "", "Chapters range")
-	rootCmd.Flags().String("language", "", "Chapter language")
-	rootCmd.Flags().String("extension", "", "Extension for chapter pack")
-	rootCmd.Flags().String("outPath", "", "Directory for saving files")
+	var url, mangaId, chapters, language, extension, outPath string
+
+	rootCmd.Flags().StringVarP(&url, "url", "u", "", "URL of the Manga to be downloaded")
+	rootCmd.Flags().StringVarP(&mangaId, "mangaId", "m", "", "ID of the Manga to be downloaded")
+	rootCmd.Flags().StringVarP(&chapters, "chapters", "c", "", "Chapters range")
+	rootCmd.Flags().StringVarP(&language, "language", "l", "", "Chapter language")
+	rootCmd.Flags().StringVarP(&extension, "extension", "e", "", "Extension for chapter pack")
+	rootCmd.Flags().StringVarP(&outPath, "outPath", "o", "", "Directory for saving files")
 }
 
 func ExecuteRoot() {
