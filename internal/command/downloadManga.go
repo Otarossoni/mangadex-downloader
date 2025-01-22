@@ -131,7 +131,7 @@ func (c *DownloadMangaCommand) Execute(cmd *cobra.Command) error {
 			)
 
 			fmt.Printf(
-				color.HiBlackString("\n%v file %v created\n"),
+				color.HiBlackString("\n%v file %v saved\n"),
 				color.HiGreenString("+"),
 				color.CyanString(zipName),
 			)

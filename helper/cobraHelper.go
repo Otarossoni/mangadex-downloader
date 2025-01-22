@@ -5,6 +5,7 @@ import (
 	"regexp"
 	"strings"
 
+	"github.com/fatih/color"
 	"github.com/spf13/cobra"
 )
 
@@ -131,4 +132,25 @@ func (c *CobraHelper) HandleOutPath(cmd *cobra.Command) (string, error) {
 	}
 
 	return "", errors.New("\nout path provided not exist")
+}
+
+func GetExamplesDescription() string {
+	var description string
+
+	description += color.HiBlackString("\"I want to download from chapter 1 to chapter 100 of Chainsaw Man\"\n")
+	description += color.HiMagentaString("mangadex-downloader --url https://mangadex.org/title/a77742b1-befd-49a4-bff5-1ad4e6b0ef7b/chainsaw-man --chapters 1-100\n")
+
+	description += color.HiBlackString("\n\"I want to download from chapter 1 to chapter 25, from 50 to 75 and chapter 100, in just one command\"\n")
+	description += color.HiMagentaString("mangadex-downloader --url https://mangadex.org/title/dd8a907a-3850-4f95-ba03-ba201a8399e3/fullmetal-alchemist --chapters 1-25;50-75;100\n")
+
+	description += color.HiBlackString("\n\"I want to download from chapter 1 to chapter 100 of Tokyo Ghoul, but in Brazilian Portuguese\"\n")
+	description += color.HiMagentaString("mangadex-downloader --url https://mangadex.org/title/6a1d1cb1-ecd5-40d9-89ff-9d88e40b136b/tokyo-ghoul --chapters 1-100 --language pt-br\n")
+
+	description += color.HiBlackString("\n\"I want to download from chapter 1 to chapter 50 of Tokyo Ghoul, but in Brazilian Portuguese and packed in .cbz\"\n")
+	description += color.HiMagentaString("mangadex-downloader --mangaId 6a1d1cb1-ecd5-40d9-89ff-9d88e40b136b --chapters 1-50 --language pt-br --extension .cbz\n")
+
+	description += color.HiBlackString("\n\"I want to download from chapter 1 to chapter 10 of Sousou no Frieren, and generate final file in my desktop\"\n")
+	description += color.HiMagentaString("mangadex-downloader --mangaId b0b721ff-c388-4486-aa0f-c2b0bb321512 --chapters 1-10 --outPath C:\\Users\\$user\\Desktop")
+
+	return description
 }
