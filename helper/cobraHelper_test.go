@@ -1,6 +1,7 @@
 package helper_test
 
 import (
+	"path/filepath"
 	"testing"
 
 	"github.com/Otarossoni/mangadex-downloader/helper"
@@ -281,7 +282,7 @@ func Test_HandleOutPath(t *testing.T) {
 
 		outPath, err := cobraHelper.HandleOutPath(cmd)
 		assert.NoError(t, err)
-		assert.Equal(t, tempDir+"\\", outPath)
+		assert.Equal(t, tempDir+string(filepath.Separator), outPath)
 	})
 
 	t.Run("non-existing outPath", func(t *testing.T) {

@@ -1,6 +1,7 @@
 package helper_test
 
 import (
+	"path/filepath"
 	"testing"
 
 	"github.com/Otarossoni/mangadex-downloader/helper"
@@ -118,14 +119,14 @@ func Test_AddBackslash(t *testing.T) {
 
 		result := helper.AddBackslash(stringTest)
 
-		assert.Equal(t, result, "test\\")
+		assert.Equal(t, result, "test"+string(filepath.Separator))
 	})
 
 	t.Run("should be able to add backslash if the string has", func(t *testing.T) {
-		stringTest := "test\\"
+		stringTest := "test" + string(filepath.Separator)
 
 		result := helper.AddBackslash(stringTest)
 
-		assert.Equal(t, result, "test\\")
+		assert.Equal(t, result, stringTest)
 	})
 }
