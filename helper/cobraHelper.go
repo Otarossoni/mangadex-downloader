@@ -22,14 +22,14 @@ func NewCobraHelper() *CobraHelper {
 func (c *CobraHelper) HandleMangaId(cmd *cobra.Command) (string, error) {
 	id, _ := cmd.Flags().GetString("mangaId")
 
-	if id != "" && isValidUUID(id) {
+	if id != "" && IsValidUUID(id) {
 		return id, nil
 	}
 
 	url, _ := cmd.Flags().GetString("url")
 
-	if isValidURL(url) {
-		if mangaId := extractUUIDFromURL(url); mangaId != "" {
+	if IsValidURL(url) {
+		if mangaId := ExtractUUIDFromURL(url); mangaId != "" {
 			return mangaId, nil
 		}
 	}
@@ -48,19 +48,19 @@ func (c *CobraHelper) HandleChapters(cmd *cobra.Command) ([]int, error) {
 
 	for _, splitChapterRange := range splitChapterRanges {
 
-		if hasDashInString(splitChapterRange) {
+		if HasDashInString(splitChapterRange) {
 			rawRanges := strings.SplitN(splitChapterRange, "-", 2)
 
 			if len(rawRanges) > 2 {
 				return chapters, errors.New("\nrange provided is invalid")
 			}
 
-			minRange, errMinRange := convertStringToInt(strings.TrimSpace(rawRanges[0]))
+			minRange, errMinRange := ConvertStringToInt(strings.TrimSpace(rawRanges[0]))
 			if errMinRange != nil {
 				return chapters, errors.New("\nrange provided is invalid")
 			}
 
-			maxRange, errMaxRange := convertStringToInt(strings.TrimSpace(rawRanges[1]))
+			maxRange, errMaxRange := ConvertStringToInt(strings.TrimSpace(rawRanges[1]))
 			if errMaxRange != nil {
 				return chapters, errors.New("\nrange provided is invalid")
 			}
@@ -77,7 +77,7 @@ func (c *CobraHelper) HandleChapters(cmd *cobra.Command) ([]int, error) {
 			continue
 		}
 
-		if newChapter, err := convertStringToInt(splitChapterRange); err == nil {
+		if newChapter, err := ConvertStringToInt(splitChapterRange); err == nil {
 			chapters = append(chapters, newChapter)
 		}
 	}

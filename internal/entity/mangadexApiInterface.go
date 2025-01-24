@@ -5,9 +5,9 @@ import (
 )
 
 type MangadexApi interface {
-	GetChapter(mangaId, language string, chapterNumber int) (*GetChapterResponse, *ErrorResponse, error)
-	GetChapterPages(chapterId string) (*GetChapterPagesResponse, *ErrorResponse, error)
-	GetPage(baseUrl, chapterHash, pageIdentification string) ([]byte, *ErrorResponse, error)
+	GetChapter(mangaId, language string, chapterNumber int) (*GetChapterResponse, error)
+	GetChapterPages(chapterId string) (*GetChapterPagesResponse, error)
+	GetPage(baseUrl, chapterHash, pageIdentification string) ([]byte, error)
 }
 
 type GetChapterResponse struct {
@@ -52,10 +52,4 @@ type GetChapterPagesChapterResponse struct {
 	Hash      string   `json:"hash"`      // Chapter hash identification
 	Data      []string `json:"data"`      // Pages identifications
 	DataSaver []string `json:"dataSaver"` // Pages identifications in server
-}
-
-type ErrorResponse struct {
-	Error   string `json:"error"`   // Error slug
-	Message string `json:"message"` // Error message
-	Status  int    `json:"status"`  // Error status code
 }

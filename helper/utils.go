@@ -10,11 +10,11 @@ import (
 	"github.com/google/uuid"
 )
 
-func hasDashInString(value string) bool {
+func HasDashInString(value string) bool {
 	return strings.Contains(value, "-")
 }
 
-func convertStringToInt(input string) (int, error) {
+func ConvertStringToInt(input string) (int, error) {
 	number, err := strconv.Atoi(input)
 	if err != nil {
 		return 0, err
@@ -22,12 +22,12 @@ func convertStringToInt(input string) (int, error) {
 	return number, nil
 }
 
-func isValidUUID(u string) bool {
+func IsValidUUID(u string) bool {
 	_, err := uuid.Parse(u)
 	return err == nil
 }
 
-func isValidURL(u string) bool {
+func IsValidURL(u string) bool {
 	parsedURL, err := url.Parse(u)
 	if err != nil || parsedURL.Scheme == "" || parsedURL.Host == "" {
 		return false
@@ -35,10 +35,10 @@ func isValidURL(u string) bool {
 	return true
 }
 
-func extractUUIDFromURL(url string) string {
+func ExtractUUIDFromURL(url string) string {
 	parts := strings.Split(url, "/")
 	for _, part := range parts {
-		if isValidUUID(part) {
+		if IsValidUUID(part) {
 			return part
 		}
 	}

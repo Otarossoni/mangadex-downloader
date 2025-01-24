@@ -15,13 +15,3 @@ func GetChapterName(title string, chapterNumber int) string {
 	}
 	return strings.Trim(title, " ")
 }
-
-func GetChapterPageNumber(pageIdentification string) string {
-	if pageIdentification == "" {
-		return ""
-	}
-
-	chapterPageNumber := strings.SplitN(pageIdentification, "-", 1)
-
-	return chapterPageNumber[0]
-}

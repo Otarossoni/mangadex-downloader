@@ -15,7 +15,7 @@ func NewMangadexApi() *MangadexApi {
 	return &MangadexApi{}
 }
 
-func (m *MangadexApi) GetChapter(mangaId, language string, chapterNumber int) (*entity.GetChapterResponse, *entity.ErrorResponse, error) {
+func (m *MangadexApi) GetChapter(mangaId, language string, chapterNumber int) (*entity.GetChapterResponse, error) {
 	params := request.Params{
 		Method: "GET",
 		URL:    BASE_URL + "/chapter",
@@ -32,20 +32,15 @@ func (m *MangadexApi) GetChapter(mangaId, language string, chapterNumber int) (*
 
 	response, err := request.New(params)
 	if err != nil {
-		return nil, nil, err
-	}
-
-	if response.StatusCode > 300 {
-		resp, err := parseError(response.RawBody)
-		return nil, resp, err
+		return nil, err
 	}
 
 	var getChapterResponse entity.GetChapterResponse
 	err = json.Unmarshal(response.RawBody, &getChapterResponse)
-	return &getChapterResponse, nil, err
+	return &getChapterResponse, err
 }
 
-func (m *MangadexApi) GetChapterPages(chapterId string) (*entity.GetChapterPagesResponse, *entity.ErrorResponse, error) {
+func (m *MangadexApi) GetChapterPages(chapterId string) (*entity.GetChapterPagesResponse, error) {
 	params := request.Params{
 		Method: "GET",
 		URL:    BASE_URL + "/at-home/server/" + chapterId,
@@ -53,20 +48,15 @@ func (m *MangadexApi) GetChapterPages(chapterId string) (*entity.GetChapterPages
 
 	response, err := request.New(params)
 	if err != nil {
-		return nil, nil, err
-	}
-
-	if response.StatusCode > 300 {
-		resp, err := parseError(response.RawBody)
-		return nil, resp, err
+		return nil, err
 	}
 
 	var getChapterPagesResponse entity.GetChapterPagesResponse
 	err = json.Unmarshal(response.RawBody, &getChapterPagesResponse)
-	return &getChapterPagesResponse, nil, err
+	return &getChapterPagesResponse, err
 }
 
-func (m *MangadexApi) GetPage(baseUrl, chapterHash, pageIdentification string) ([]byte, *entity.ErrorResponse, error) {
+func (m *MangadexApi) GetPage(baseUrl, chapterHash, pageIdentification string) ([]byte, error) {
 	params := request.Params{
 		Method: "GET",
 		URL:    baseUrl + "/data/" + chapterHash + "/" + pageIdentification,
@@ -76,21 +66,8 @@ func (m *MangadexApi) GetPage(baseUrl, chapterHash, pageIdentification string) (
 	_, ok := err.(*json.SyntaxError)
 
 	if err != nil && !ok {
-		return nil, nil, err
-	}
-
-	if response.StatusCode > 300 {
-		resp, err := parseError(response.RawBody)
-		return nil, resp, err
-	}
-
-	return response.RawBody, nil, nil
-}
-
-func parseError(body []byte) (*entity.ErrorResponse, error) {
-	var errResponse entity.ErrorResponse
-	if err := json.Unmarshal(body, &errResponse); err != nil {
 		return nil, err
 	}
-	return &errResponse, nil
+
+	return response.RawBody, nil
 }

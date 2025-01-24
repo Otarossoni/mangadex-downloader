@@ -24,8 +24,12 @@ func GetPageExtension(pageIdentification string) string {
 
 	splitIdentification := strings.Split(pageIdentification, ".")
 
+	if len(splitIdentification) == 1 {
+		return ""
+	}
+
 	return strings.Trim(
-		fmt.Sprintf(".%v", splitIdentification[1]),
+		fmt.Sprintf(".%v", splitIdentification[len(splitIdentification)-1]),
 		" ",
 	)
 }

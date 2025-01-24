@@ -50,15 +50,11 @@ func (c *DownloadMangaCommand) Execute(cmd *cobra.Command) error {
 	}
 
 	for _, chapter := range chapters {
-		chapterDetails, errResponse, errChapterDetails := c.MangadexApi.GetChapter(
+		chapterDetails, errChapterDetails := c.MangadexApi.GetChapter(
 			mangaId,
 			language,
 			chapter,
 		)
-		if errResponse != nil {
-			color.Red(fmt.Sprintf("\nerror with status code %v getting chapter %v details", errResponse.Status, chapter))
-			continue
-		}
 		if errChapterDetails != nil {
 			color.Red(fmt.Sprintf("\nerror fetching chapter %v details", chapter))
 			continue
@@ -71,11 +67,7 @@ func (c *DownloadMangaCommand) Execute(cmd *cobra.Command) error {
 				color.CyanString(util.GetChapterName(chapterData.Attributes.Title, chapter)),
 			)
 
-			chapterPagesList, errResponse, errChapterPagesList := c.MangadexApi.GetChapterPages(chapterData.Id)
-			if errResponse != nil {
-				color.Red(fmt.Sprintf("\nerror with status code %v fetching chapter %v pages list", errResponse.Status, chapter))
-				continue
-			}
+			chapterPagesList, errChapterPagesList := c.MangadexApi.GetChapterPages(chapterData.Id)
 			if errChapterPagesList != nil {
 				color.Red(fmt.Sprintf("\nerror fetching chapter %v pages list", chapter))
 				continue
@@ -98,16 +90,11 @@ func (c *DownloadMangaCommand) Execute(cmd *cobra.Command) error {
 			}
 
 			for _, chapterPageIdentification := range chapterPagesList.Chapter.Data {
-				chapterPage, errResponse, errChapterPage := c.MangadexApi.GetPage(
+				chapterPage, errChapterPage := c.MangadexApi.GetPage(
 					chapterPagesList.BaseUrl,
 					chapterPagesList.Chapter.Hash,
 					chapterPageIdentification,
 				)
-				if errResponse != nil {
-					chapterPageNumber := util.GetChapterPageNumber(chapterPageIdentification)
-					color.Red(fmt.Sprintf("\nerror with status code %v getting chapter %v page %v", errResponse.Status, chapter, chapterPageNumber))
-					continue
-				}
 				if errChapterPage != nil {
 					color.Red(fmt.Sprintf("\nerror fetching chapter %v pages list", chapter))
 					continue
