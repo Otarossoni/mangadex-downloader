@@ -1,10 +1,10 @@
-![mangadex-dowloader-logo](https://raw.githubusercontent.com/Otarossoni/mangadex-downloader/master/assets/mangadex-dowloader-logo.png)
-
-<h3 align="center">
+<div id="header">
+   <h3 align="center">
       <span style="color:#fa6546">Mangadex</span> 
       <span style="color:#e4dddb">Downloader</span>
       <br>
    </h3>
+</div>
 
 >An (unofficial) CLI to download manga chapters from [Mangadex](https://mangadex.org/) with just one command, with the possibility of obtaining them in .zip and .cbz formats.
 
