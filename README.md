@@ -1,19 +1,16 @@
-<div id="header">
-   <p align="center">
-      <img src="/assets/mangadex-dowloader-logo.svg" width="120px" align="center" alt="mdd-logo" />
-   <h3 align="center">
+![mangadex-dowloader-logo](https://raw.githubusercontent.com/Otarossoni/mangadex-downloader/master/assets/mangadex-dowloader-logo.png)
+
+<h3 align="center">
       <span style="color:#fa6546">Mangadex</span> 
       <span style="color:#e4dddb">Downloader</span>
       <br>
    </h3>
-   </p>
-</div>
 
 >An (unofficial) CLI to download manga chapters from [Mangadex](https://mangadex.org/) with just one command, with the possibility of obtaining them in .zip and .cbz formats.
 
 ---
 
-<img src="/assets/download-cmd.png" align="center" alt="download-cmd" />
+![download-cmd](https://raw.githubusercontent.com/Otarossoni/mangadex-downloader/master/assets/download-cmd.png)
 
 ## Usage
 
@@ -35,7 +32,7 @@ All flags have aliases, see the example above only using them:
 
 You can review all flags through the command `./mangadex-downloader -h`:
 
-<img src="/assets/help-cmd.png" align="center" alt="help-cmd" />
+![help-cmd](https://raw.githubusercontent.com/Otarossoni/mangadex-downloader/master/assets/help-cmd.png)
 
 #### Flags
 
